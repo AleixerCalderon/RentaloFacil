@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA - Simple Navigation</title>
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBA6pM_xbKlxqACuLcLz9u9g5dRMXWppCI"></script>
+    <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+
+    <!-- Menú de navegación -->
+    <nav>
+        <div class="nav-wrapper teal">
+            <a href="#!" class="brand-logo center">
+                <img  src="./assets/Logo-rentaloFacil-v1.png">
+
+            </a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="#" data-view="home">Home</a></li>
+                <li><a href="#" data-view="encuentralo">Encuentralo</a></li>                
+                <li><a href="#" data-view="about">Quiénes Somos</a></li>
+                <li><a href="#" data-view="form">prueba scraping</a></li>
+                
+            </ul>
+            <!-- <button class="btn waves-effect btn-p" id="btnViabilidad" >Análisis de viabilidad</button>               -->
+        </div>
+    </nav>
+    <!-- <button id="btn" onclick="darDetalleLocal()">Ver Detalle</button> -->
+    <!-- Contenedor de vistas dinámicas -->
+    <div id="view-container" class="container row">
+        <!-- Las vistas serán renderizadas aquí -->
+    </div>
+
+    <!-- Materialize JS y jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script de la aplicación -->
+    <script type="module" src="app.js"></script>
+  
+</body>
+</html>
