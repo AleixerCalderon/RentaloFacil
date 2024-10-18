@@ -14,6 +14,8 @@ header nav{
 }
 h4 {
   color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: -1px;
 }
 
 .center-aab {
@@ -56,24 +58,74 @@ h4 {
   display: block;
 }
 
+.info-company{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+}
 
+footer >p{
+  border-top: 1px solid #919191;
+  padding: 20px 0px;
+  color: #919191;
+}
+
+.info-company .item_info{
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 10px;
+  justify-content: space-between;
+}
+.textos-info{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.textos-info > p {
+  margin: 0;
+}
 
 .aab-img {
   width: 300px;
   margin: auto;
   display: table;
-
 }
-
 
 body {
   /* background: linear-gradient(to bottom, rgb(201, 201, 201) 50%, white 50%); */
 
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 70vh, white 30px), url('./bannerOf.jpeg') top center;
-  background-size: contain;
+  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 70vh, white 30px), url('./bannerOf.jpeg') top center;
+  background-size: contain; */
   margin: 0;
   height: 100vh;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
+  background-color: #002333;
+  font-family: "Open Sans", sans-serif;
+}
+.container-fluid {
+  width: 100%;
+  max-width:initial;
+  margin-top: 0!important;
+  text-align: center;
+}
+.container-fluid > .row {
+  margin: 0;
+}
+.container-fluid > .row > .col {
+  padding: 0;
+}
+.slider-p{
+  text-align: center;
+  background-color: #002333;
+  height: 363px;
+}
+.slider-p > img{
+  max-width: 1280px;
+}
+.container{
+  margin: 0 auto!important;
 }
 
 .header {
@@ -147,4 +199,11 @@ body {
 
 .precio{
   font-weight: 700;
+}
+footer{
+  max-width: 1280px;
+  text-align: center;
+  color: #ffffff;
+  margin: 40px auto 0 auto;
+  padding-top: 40px;
 }
