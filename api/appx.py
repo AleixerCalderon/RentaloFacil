@@ -9,7 +9,6 @@ import json
 app = Flask(__name__)
 CORS(app)
 def scrape_fincaraiz_detalle(url):
-    print(url)
     headers = {        
         'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }        
@@ -79,6 +78,9 @@ def scrape_fincaraiz(search_term):
                 'Ubicación': location,
                 'Img':img,
                 'Tipo':1,
+                'OpinionUsuarios':0,
+                'SeguridadSector':0,
+                'Popularidad':0,
                 'Geo':resultsDetalle
             })
         except:
@@ -88,13 +90,55 @@ def scrape_fincaraiz(search_term):
     return results
 
 
+# GOOGLE INIT
+
+def obtener_calificaciones_por_coordenadas(latitud, longitud, api_key):
+    # Usar Nearby Search para buscar lugares cercanos (ejemplo: barrio o sector)
+    print(latitud)
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitud},{longitud}&radius=1000&type=locality&key={api_key}"
+    response = requests.get(url)
+    data = response.json()
+
+    if response.status_code == 200 and len(data['results']) > 0:
+        place_id = data['results'][0]['place_id']  # Obtener el ID del lugar más cercano
+
+        # Usar Place Details para obtener las calificaciones del lugar
+        details_url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={api_key}"
+        details_response = requests.get(details_url)
+        details_data = details_response.json()
+
+        if details_response.status_code == 200:
+            rating = details_data['result'].get('rating', 'No disponible')
+            user_ratings_total = details_data['result'].get('user_ratings_total', 'No disponible')
+            print("inicia", rating, user_ratings_total)
+            return rating, user_ratings_total
+        else:
+            print("no encuentra")
+            return None, None # f"Error al obtener detalles del lugar: {details_response.status_code}"
+    else:
+        print("Error")
+        return None, None # f"No se encontraron lugares cercanos o error en la solicitud: {response.status_code}"
+
+# GOOGLE END
+
+
 
 @app.route('/scrape', methods=['GET'])
 def scrape():
+    api_key = "AIzaSyBA6pM_xbKlxqACuLcLz9u9g5dRMXWppCI" 
     search_term = request.args.get('search_term')    
     if not search_term:
         return jsonify({"error": "Parámetro 'search_term' es requerido"}), 400    
-    results = scrape_fincaraiz(search_term)     
+    results = scrape_fincaraiz(search_term)   
+    # print("Inia conteo")
+    # for prop in results:
+    #     try:
+    #         print(prop)
+    #         prop["OpinionUsuarios"], prop["Popularidad"] = obtener_calificaciones_por_coordenadas(prop["Geo"]["latitude"], prop["Geo"]["longitude"], api_key)
+    #         print(prop["OpinionUsuarios"])
+    #     except:
+    #         continue
+
     with open('data.json', 'w', encoding='utf-8') as json_file:
         json.dump(results, json_file, ensure_ascii=False, indent=4)
     return jsonify(results)

@@ -1,0 +1,17 @@
+[
+    {
+        "Nombre": "Local en  Arriendo",
+        "Área": "30 m²",
+        "Precio": "$ 1,890,500",
+        "Ubicación": "Bogotá, Bogotá, d.c.",
+        "Img": "https://cdn2.infocasas.com.uy/repo/img/th.outside500x260.67116fbc803f3_infocdn__4525802-1-1729179915-1jpg.jpg",
+        "Tipo": 1,
+        "OpinionUsuarios": null,
+        "SeguridadSector": 0,
+        "Popularidad": null,
+        "Geo": {
+            "latitude": 4.7110,
+            "longitude": -74.0721
+        }
+    }
+]

@@ -25,6 +25,22 @@ function renderView(view) {
         initEncuentralo();
     }
 }
+function imprimirEstrellas(puntaje) {
+    const maxEstrellas = 5;
+    let estrellas = "";
+    for (let i = 1; i <= maxEstrellas; i++) {
+        if (puntaje >= i) {
+            estrellas += '★';
+        } else if (puntaje >= i - .5) {
+            estrellas += '☆';
+        } else {
+            estrellas += '✩';
+        }
+    }
+    return estrellas; //⭐⭐⭐
+}
+
+
 function darDetalleLocal(local) {
     renderView("detalle");
     const resultsBody = document.getElementById('results-body-detalle');
@@ -37,9 +53,9 @@ function darDetalleLocal(local) {
                   <table>
                       <tr> <td class="precio"><span>Arriendo:</span> ${local.Precio}</td>     </tr>
                       <tr> <td>Área: ${local.Área}</td>                                       </tr>
-                      <tr> <td> Calificación del sector: 4.4 ⭐</td>                                     </tr>
-                      <tr> <td> Seguridad del sector: 4.4 ⭐⭐⭐⭐ </td>                               </tr>
-                      <tr> <td> trafico del sector: ⭐⭐⭐ </td>                                       </tr>
+                      <tr> <td> Votación de percepción del sector:  ${local.OpinionUsuarios} ${imprimirEstrellas(local.OpinionUsuarios)}</td>                                     </tr>
+                      <tr> <td> Seguridad del sector:  ${local.SeguridadSector}  ${imprimirEstrellas(local.SeguridadSector)}</td>                               </tr>
+                      <tr> <td> Popularidad del sector: ${local.Popularidad} ${imprimirEstrellas(local.Popularidad)}</td>                                       </tr>
                   </table>
                 </td>
                 <td><div class="map-detalle" id="map"></div></td>                   
@@ -49,11 +65,11 @@ function darDetalleLocal(local) {
     const btnRetornar = document.getElementById("btnRetornar");
     btnRetornar.addEventListener('click', function (event) {
         event.preventDefault();
-        renderView("encuentralo");      
+        renderView("encuentralo");
         darLocales(1);
     });
-  
-    
+
+
 
     const btnViabilidad = document.getElementById("btnViabilidad");
     btnViabilidad.addEventListener('click', function (event) {
@@ -67,7 +83,7 @@ function darDetalleLocal(local) {
     btnPartner.addEventListener('click', function (event) {
         event.preventDefault();
         const vista = document.getElementById('pnlGeneralPlus');
-        vista.innerHTML = partner;       
+        vista.innerHTML = partner;
     });
 
     //btnCesion cesion
@@ -75,7 +91,7 @@ function darDetalleLocal(local) {
     btnCesion.addEventListener('click', function (event) {
         event.preventDefault();
         const vista = document.getElementById('pnlGeneralPlus');
-        vista.innerHTML = cesion;      
+        vista.innerHTML = cesion;
     });
 }
 // Función para inicializar la navegación
@@ -176,11 +192,11 @@ function displayLocales(localesF) {
                     <td class="precio"><span>Arriendo:</span> ${local.Precio}                   
                     <img class="img-table" src="${local.Img}"> </td>                   
                     <td>
-                      <table>
-                          <tr> <td>Área: ${local.Área}</td> </tr>
-                          <tr> <td> Calificación del sector: 4.4 ⭐</td> </tr>
-                          <tr> <td> Seguridad del sector: 4.4 ⭐⭐⭐⭐ </td> </tr>
-                          <tr> <td> trafico del sector: ⭐⭐⭐ </td> </tr>
+                      <table>                      
+                        <tr> <td>Área: ${local.Área}</td>                                       </tr>
+                        <tr> <td> Votación de percepción del sector:  ${local.OpinionUsuarios} ${imprimirEstrellas(local.OpinionUsuarios)}</td>                                     </tr>
+                        <tr> <td> Seguridad del sector:  ${local.SeguridadSector}  ${imprimirEstrellas(local.SeguridadSector)}</td>                               </tr>
+                        <tr> <td> Popularidad del sector: ${local.Popularidad} ${imprimirEstrellas(local.Popularidad)}</td>    
                       </table>
                     </td>
                     <td><div class="map-detalle" id="map${index}"></div></td>                   
@@ -200,7 +216,7 @@ function displayLocales(localesF) {
 async function darLocalesDb() {
     try {
 
-        const response = await fetch('./data/locales.json');
+        const response = await fetch('./data/data.json');
         const locales = await response.json();
         return locales;
 
@@ -218,15 +234,15 @@ async function darLocales(tipo) {
 
     }
 }
-function initMap(la, lo, i) {
-    // Coordenadas del centro del mapa (ejemplo: Ciudad de México)
-    const center = { lat: la, lng: lo };
 
+function initMap(la, lo, i) {
+    const center = { lat: la, lng: lo };
     // Crear el mapa
     const map = new google.maps.Map(document.getElementById('map' + i), {
         zoom: 13,
         center: center
     });
+    console.log(map);
 
     // Añadir la capa de tráfico
     const trafficLayer = new google.maps.TrafficLayer();
